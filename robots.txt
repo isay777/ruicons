@@ -1,0 +1,41 @@
+# robots.txt — https://ruicons-font.ru/
+
+# ── Все роботы ────────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /download/
+
+# ── Google ───────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Disallow: /download/
+
+# ── Яндекс ───────────────────────────────────────
+User-agent: Yandex
+Allow: /
+Disallow: /download/
+Clean-param: q
+
+# ── Bing ─────────────────────────────────────────
+User-agent: Bingbot
+Allow: /
+Disallow: /download/
+
+# ── Агрессивные парсеры — запрет ─────────────────
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ── Карта сайта ──────────────────────────────────
+Sitemap: https://ruicons-font.ru/sitemap.xml
+
+# ── Главное зеркало (для Яндекса) ────────────────
+Host: https://ruicons-font.ru

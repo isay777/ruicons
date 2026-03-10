@@ -1,0 +1,14 @@
+{
+  "name": "RU Icons",
+  "short_name": "RU Icons",
+  "description": "Иконочный шрифт российских сервисов — VK, Яндекс, Авито, Ozon, Wildberries и другие",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "lang": "ru",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

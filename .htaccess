@@ -1,0 +1,91 @@
+# .htaccess — https://ruicons-font.ru/
+# Apache 2.4+
+
+Options -Indexes
+Options +FollowSymLinks
+RewriteEngine On
+
+# ── Принудительный HTTPS ──────────────────────────
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# ── Убрать www (главное зеркало без www) ─────────
+RewriteCond %{HTTP_HOST} ^www\.ruicons-font\.ru$ [NC]
+RewriteRule ^ https://ruicons-font.ru%{REQUEST_URI} [R=301,L]
+
+# ── Убрать trailing slash (кроме корня) ──────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^(.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# ── Убрать .html из URL ───────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# ══════════════════════════════════════════════════
+# КЭШИРОВАНИЕ
+# ══════════════════════════════════════════════════
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html                 "access plus 1 hour"
+    ExpiresByType text/css                  "access plus 1 year"
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType text/javascript           "access plus 1 year"
+    ExpiresByType font/woff2                "access plus 1 year"
+    ExpiresByType font/woff                 "access plus 1 year"
+    ExpiresByType font/ttf                  "access plus 1 year"
+    ExpiresByType font/otf                  "access plus 1 year"
+    ExpiresByType application/font-woff     "access plus 1 year"
+    ExpiresByType application/font-woff2    "access plus 1 year"
+    ExpiresByType image/png                 "access plus 1 year"
+    ExpiresByType image/jpeg                "access plus 1 year"
+    ExpiresByType image/webp                "access plus 1 year"
+    ExpiresByType image/svg+xml             "access plus 1 year"
+    ExpiresByType image/x-icon              "access plus 1 year"
+</IfModule>
+
+# ══════════════════════════════════════════════════
+# GZIP-СЖАТИЕ
+# ══════════════════════════════════════════════════
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+    SetEnvIfNoCase Request_URI \.(gif|jpg|jpeg|png|webp|gz|zip)$ no-gzip
+</IfModule>
+
+# ══════════════════════════════════════════════════
+# CORS ДЛЯ ШРИФТОВ
+# ══════════════════════════════════════════════════
+<IfModule mod_headers.c>
+    <FilesMatch "\.(woff2|woff|ttf|otf|eot)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    Header always set X-Content-Type-Options  "nosniff"
+    Header always set X-Frame-Options         "SAMEORIGIN"
+    Header always set X-XSS-Protection        "1; mode=block"
+    Header always set Referrer-Policy         "strict-origin-when-cross-origin"
+</IfModule>
+
+# ══════════════════════════════════════════════════
+# MIME-ТИПЫ
+# ══════════════════════════════════════════════════
+<IfModule mod_mime.c>
+    AddType font/woff2       .woff2
+    AddType font/woff        .woff
+    AddType font/ttf         .ttf
+    AddType font/otf         .otf
+    AddType image/svg+xml    .svg
+    AddType image/x-icon     .ico
+</IfModule>
+
+# ══════════════════════════════════════════════════
+# СТРАНИЦЫ ОШИБОК
+# ══════════════════════════════════════════════════
+ErrorDocument 404 /404.html
+ErrorDocument 403 /403.html
